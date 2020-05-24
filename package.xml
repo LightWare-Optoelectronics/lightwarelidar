@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>lightwarelidar</name>
+  <version>0.0.0</version>
+  <description>Driver package for LightWare Optoelectronics devices.</description>
+  <license>Unlicense</license>
+  <url type="website">https:lightwarelidar.com</url>
+
+  <author>Robert Gowans</author>
+  <maintainer email="robgowans@lightwarelidar.com">Robert Gowans</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+
+  <export>
+  </export>
+</package>
