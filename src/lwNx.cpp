@@ -179,6 +179,10 @@ bool lwnxCmdReadUInt32(lwSerialPort* Serial, uint8_t CommandId, uint32_t* Respon
 	return lwnxHandleManagedCmd(Serial, CommandId, (uint8_t*)Response, 4);
 }
 
+bool lwnxCmdReadFloat(lwSerialPort* Serial, uint8_t CommandId, float* Response) {
+	return lwnxHandleManagedCmd(Serial, CommandId, (uint8_t*)Response, 4);
+}
+
 bool lwnxCmdReadString(lwSerialPort* Serial, uint8_t CommandId, char* Response) {
 	return lwnxHandleManagedCmd(Serial, CommandId, (uint8_t*)Response, 16);
 }
@@ -208,6 +212,10 @@ bool lwnxCmdWriteUInt16(lwSerialPort* Serial, uint8_t CommandId, uint16_t Value)
 }
 
 bool lwnxCmdWriteUInt32(lwSerialPort* Serial, uint8_t CommandId, uint32_t Value) {
+	return lwnxHandleManagedCmd(Serial, CommandId, NULL, 0, true, (uint8_t*)&Value, 4);
+}
+
+bool lwnxCmdWriteFloat(lwSerialPort* Serial, uint8_t CommandId, float Value) {
 	return lwnxHandleManagedCmd(Serial, CommandId, NULL, 0, true, (uint8_t*)&Value, 4);
 }
 

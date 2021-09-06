@@ -60,6 +60,8 @@ bool lwnxCmdReadUInt8(lwSerialPort* Serial, uint8_t CommandId, uint8_t* Response
 bool lwnxCmdReadUInt16(lwSerialPort* Serial, uint8_t CommandId, uint16_t* Response);
 bool lwnxCmdReadUInt32(lwSerialPort* Serial, uint8_t CommandId, uint32_t* Response);
 
+bool lwnxCmdReadFloat(lwSerialPort* Serial, uint8_t CommandId, float* Response);
+
 bool lwnxCmdReadString(lwSerialPort* Serial, uint8_t CommandId, char* Response);
 bool lwnxCmdReadData(lwSerialPort* Serial, uint8_t CommandId, uint8_t* Response, uint32_t ResponseSize);
 
@@ -71,6 +73,8 @@ bool lwnxCmdWriteInt32(lwSerialPort* Serial, uint8_t CommandId, int32_t Value);
 bool lwnxCmdWriteUInt8(lwSerialPort* Serial, uint8_t CommandId, uint8_t Value);
 bool lwnxCmdWriteUInt16(lwSerialPort* Serial, uint8_t CommandId, uint16_t Value);
 bool lwnxCmdWriteUInt32(lwSerialPort* Serial, uint8_t CommandId, uint32_t Value);
+
+bool lwnxCmdWriteFloat(lwSerialPort* Serial, uint8_t CommandId, float Value);
 
 bool lwnxCmdWriteString(lwSerialPort* Serial, uint8_t CommandId, char* String);
 bool lwnxCmdWriteData(lwSerialPort* Serial, uint8_t CommandId, uint8_t* Data, uint32_t DataSize);
