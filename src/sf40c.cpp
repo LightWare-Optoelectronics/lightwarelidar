@@ -19,6 +19,7 @@ struct lwScanRev {
 	uint8_t revId;
 	uint32_t expectedPointCount;
 	uint32_t pointCount;
+    int32_t forwardOffset;
 	lwScanRevState state;
     ros::Time startTime;
 };
@@ -48,15 +49,21 @@ void initScanRev(lwScanRev* Scan, sensor_msgs::LaserScan& ScanMsg, std::string F
 
 void generateScanPacket(lwScanRev* Scan, ros::Publisher& ScanPub, sensor_msgs::LaserScan& ScanMsg) {
 	double scanDuration = 1.0f / 5.0f;
-    
+
     ScanMsg.header.stamp = Scan->startTime;
     ScanMsg.angle_increment = (360.0 / 180.0 * M_PI) / Scan->pointCount;
     ScanMsg.time_increment = scanDuration / Scan->pointCount;
     ScanMsg.scan_time = scanDuration;
     ScanMsg.ranges.resize(Scan->pointCount);
 
+    // Subtract forward offset from degree position.
+    float degreePerPoint = 360.0 / Scan->pointCount;
+    int offsetPoints = (int)(Scan->forwardOffset / degreePerPoint);
+
     for (int i = 0; i < Scan->pointCount; ++i) {
-        ScanMsg.ranges[i] = Scan->distances[Scan->pointCount - i - 1];
+        int pIdx = (Scan->pointCount - 1) - (i - offsetPoints);
+        pIdx = pIdx % Scan->pointCount;
+        ScanMsg.ranges[i] = Scan->distances[pIdx];
     }
 
     ScanPub.publish(ScanMsg);
@@ -132,6 +139,7 @@ int driverScan(lwSerialPort* Serial) {
                 scanRev.pointCount = 0;
                 scanRev.expectedPointCount = pointTotal;
                 scanRev.revId = revolutionIndex;
+                scanRev.forwardOffset = forwardOffset;
                 scanRev.startTime = ros::Time::now();
             }
         }
