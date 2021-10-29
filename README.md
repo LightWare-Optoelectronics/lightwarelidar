@@ -20,6 +20,10 @@ The communications port used to interface with the SF40C.
 
 The transformation frame.
 
+~angle_offset (int, default: 0)
+
+Offset applied to scan forward direction.
+
 ## sf45b Node
 
 This node interfaces with an SF45/B and passes point cloud data to the pointcloud topic.

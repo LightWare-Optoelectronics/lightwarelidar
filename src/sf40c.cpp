@@ -26,6 +26,7 @@ struct lwScanRev {
 
 sensor_msgs::LaserScan rosScanData;
 lwScanRev scanRev;
+int32_t userAngleOffset;
 
 void initScanRev(lwScanRev* Scan, sensor_msgs::LaserScan& ScanMsg, std::string FrameId) {
     Scan->revId = 0;
@@ -58,7 +59,7 @@ void generateScanPacket(lwScanRev* Scan, ros::Publisher& ScanPub, sensor_msgs::L
 
     // Subtract forward offset from degree position.
     float degreePerPoint = 360.0 / Scan->pointCount;
-    int offsetPoints = (int)(Scan->forwardOffset / degreePerPoint);
+    int offsetPoints = (int)((Scan->forwardOffset + userAngleOffset) / degreePerPoint);
 
     for (int i = 0; i < Scan->pointCount; ++i) {
         int pIdx = (Scan->pointCount - 1) - (i - offsetPoints);
@@ -188,6 +189,7 @@ int main(int argc, char** argv) {
     privateNode.param(std::string("port"), portName, std::string("/dev/ttyUSB0"));
     std::string frameId;
     privateNode.param(std::string("frame_id"), frameId, std::string("laser"));
+    privateNode.param(std::string("angle_offset"), userAngleOffset, 0);
 
     ROS_INFO("Starting SF40C node");
 
